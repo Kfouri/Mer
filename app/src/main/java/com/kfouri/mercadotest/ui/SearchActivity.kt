@@ -1,6 +1,5 @@
 package com.kfouri.mercadotest.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,21 +18,20 @@ import com.kfouri.mercadotest.util.Utils
 import com.kfouri.mercadotest.viewmodel.SearchActivityViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
+const val PRODUCT_ID = "productId"
+
 class SearchActivity : AppCompatActivity() {
 
-    private val adapter = SearchAdapter { product : ProductModel -> itemClicked(product) }
+    private val adapter = SearchAdapter(this) { product : ProductModel -> itemClicked(product) }
     private val list = ArrayList<ProductModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val recyclerView = recyclerView_search
-        recyclerView.setHasFixedSize(true)
-        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        recyclerView.adapter = adapter
-
-        adapter.setData(list)
+        recyclerView_search.setHasFixedSize(true)
+        recyclerView_search.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        recyclerView_search.adapter = adapter
 
         val viewModel = ViewModelProviders.of(this).get(SearchActivityViewModel::class.java)
         viewModel.onProductList().observe(this, Observer { showProducts(it) })
@@ -44,7 +42,7 @@ class SearchActivity : AppCompatActivity() {
                 hideKeyboard()
                 viewModel.searchProduct(editText_search.text.toString())
             } else {
-                Toast.makeText(this, "Campo de búsqueda vacío", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.search_field_empty), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -52,7 +50,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onChanged() {
                 super.onChanged()
                 val cnt = adapter.itemCount
-                textView_emptyList.text = "Lista vacía"//getString(R.string.es_empty_list)
+                textView_emptyList.text = getString(R.string.empty_list)
                 textView_emptyList.visibility = if (cnt > 0) View.GONE else View.VISIBLE
             }
         })
@@ -72,9 +70,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun itemClicked(product: ProductModel) {
-        Log.d("Kafu", "idProduct: "+product.id)
+        Log.d("Kafu", "Product ID: "+product.id)
         val intent = Intent(this, ProductDetailActivity::class.java)
-        intent.putExtra("idProduct", product.id)
+        intent.putExtra(PRODUCT_ID, product.id)
         startActivity(intent)
     }
 }

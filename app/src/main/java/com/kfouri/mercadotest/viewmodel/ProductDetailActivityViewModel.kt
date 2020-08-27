@@ -27,8 +27,7 @@ class ProductDetailActivityViewModel : ViewModel() {
         apiService.getProduct(idProduct)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-//            ?.doOnSubscribe { showLoading() }
-//            ?.doOnTerminate { hideLoading() }
+            .doOnSubscribe { showProgress(true)}
             .subscribe(object : Subscriber<ProductResponseModel>() {
                 override fun onCompleted() {
                     getProductDetail(idProduct)
@@ -36,7 +35,7 @@ class ProductDetailActivityViewModel : ViewModel() {
 
                 override fun onError(e: Throwable) {
                     //showToast("Error al obtener los productos")
-                    //hideLoading()
+                    showProgress(false)
                     Log.d("Kafu", "Error al obtener los productos "+e.message)
                 }
 
@@ -54,7 +53,6 @@ class ProductDetailActivityViewModel : ViewModel() {
         apiService.getProductDescription(idProduct)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showProgress(true)}
             .doOnTerminate { showProgress(false) }
             .subscribe(object : Subscriber<ProductDetailResponseModel>() {
                 override fun onCompleted() {
@@ -64,8 +62,7 @@ class ProductDetailActivityViewModel : ViewModel() {
                 }
 
                 override fun onError(e: Throwable) {
-                    //showToast("Error al obtener los productos")
-                    //hideLoading()
+                    showProgress(false)
                     Log.d("Kafu", "Error al obtener los Detalle del productos "+e.message)
                     productLiveData.value = product
                 }

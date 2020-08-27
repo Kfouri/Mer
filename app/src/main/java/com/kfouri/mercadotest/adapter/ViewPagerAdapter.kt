@@ -35,8 +35,8 @@ class ViewPagerAdapter(var context: Context) : PagerAdapter() {
 
         GlideApp.with(context)
             .load(imageList[position].url)
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_search_black_24dp)
+            .placeholder(R.drawable.loading_image)
+            .error(R.drawable.damaged_image)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter()
             .into(imageView)

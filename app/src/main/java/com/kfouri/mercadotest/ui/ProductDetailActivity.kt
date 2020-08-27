@@ -1,7 +1,6 @@
 package com.kfouri.mercadotest.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,19 +20,30 @@ class ProductDetailActivity : AppCompatActivity() {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private var dotsCount: Int = 0
     private var dots = ArrayList<ImageView>()
+    private lateinit var viewModel: ProductDetailActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
 
-        val viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
+        setViewModel()
+        getProducts()
+        setViewPager()
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
         viewModel.onGetProduct().observe(this, Observer { showProducts(it) })
         viewModel.onShowProgress().observe(this, Observer { showProgress(it) })
+    }
 
+    private fun getProducts() {
         intent?.let {
-                viewModel.getProduct(it.getStringExtra("idProduct")!!)
+            viewModel.getProduct(it.getStringExtra(PRODUCT_ID)!!)
         }
+    }
 
+    private fun setViewPager() {
         viewPagerAdapter = ViewPagerAdapter(this)
         viewPager_images.adapter = viewPagerAdapter
         viewPager_images.addOnPageChangeListener(object : OnPageChangeListener {
@@ -66,7 +76,6 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun showProducts(product: ProductResponseModel) {
-        Log.d("Kafu", "List: "+product.title+" --- "+product.description)
         textView_title.text = product.title
         viewPagerAdapter.setData(product.pictures)
         textView_price.text = product.price.toString()

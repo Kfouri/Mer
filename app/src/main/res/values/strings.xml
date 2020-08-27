@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MercadoTest</string>
+    <string name="search_activity_label">Busqueda de artículos</string>
+    <string name="product_detail_activity_label">Detalle del Producto</string>
+    <string name="search_field_empty">Campo de búsqueda vacío</string>
+    <string name="empty_list">Lista sin resultados</string>
+    <string name="price">$ %1$s</string>
+    <string name="free_shipping">Envío gratis</string>
+    <string name="condition_new">Nuevo</string>
+    <string name="condition_used">Usado</string>
+    <string name="condition_no_tag">No especificado</string>
 </resources>
