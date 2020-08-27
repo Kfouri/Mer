@@ -5,16 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kfouri.mercadotest.model.ProductDetailResponseModel
 import com.kfouri.mercadotest.model.ProductResponseModel
-import com.kfouri.mercadotest.model.SearchResponseModel
 import com.kfouri.mercadotest.network.ApiService
+import com.kfouri.mercadotest.util.Constants
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class ProductDetailActivityViewModel : ViewModel() {
 
+    private var TAG = "ProductDetailActivityViewModel"
     private var productLiveData = MutableLiveData<ProductResponseModel>()
-    var showProgress = MutableLiveData<Boolean>()
+    private var showProgress = MutableLiveData<Boolean>()
 
     private lateinit var product: ProductResponseModel
 
@@ -30,13 +31,18 @@ class ProductDetailActivityViewModel : ViewModel() {
             .doOnSubscribe { showProgress(true)}
             .subscribe(object : Subscriber<ProductResponseModel>() {
                 override fun onCompleted() {
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "getProduct() - onCompleted() - productID=$idProduct")
+                    }
                     getProductDetail(idProduct)
                 }
 
                 override fun onError(e: Throwable) {
                     //showToast("Error al obtener los productos")
                     showProgress(false)
-                    Log.d("Kafu", "Error al obtener los productos "+e.message)
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "getProduct() - onError() - productID=$idProduct error="+e.message)
+                    }
                 }
 
                 override fun onNext(result: ProductResponseModel) {
@@ -56,14 +62,18 @@ class ProductDetailActivityViewModel : ViewModel() {
             .doOnTerminate { showProgress(false) }
             .subscribe(object : Subscriber<ProductDetailResponseModel>() {
                 override fun onCompleted() {
-                    Log.d("Kafu", "Detalle onCompleted()")
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "getProductDetail() - onCompleted() - productID=$idProduct")
+                    }
                     product.description = detail
                     productLiveData.value = product
                 }
 
                 override fun onError(e: Throwable) {
                     showProgress(false)
-                    Log.d("Kafu", "Error al obtener los Detalle del productos "+e.message)
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "getProductDetail() - onError() - productID=$idProduct error="+e.message)
+                    }
                     productLiveData.value = product
                 }
 

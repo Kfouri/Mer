@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kfouri.mercadotest.GlideApp
 import com.kfouri.mercadotest.R
 import com.kfouri.mercadotest.model.ProductModel
+import com.kfouri.mercadotest.util.Constants.CONDITION_NEW
+import com.kfouri.mercadotest.util.Constants.CONDITION_USED
 import kotlinx.android.synthetic.main.search_item.view.*
 
 class SearchAdapter(val context: Context, private val clickListener: (ProductModel) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -34,9 +36,6 @@ class SearchAdapter(val context: Context, private val clickListener: (ProductMod
     }
 
     class SearchViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
-        private val CONDITION_NEW = "new"
-        private val CONDITION_USED = "used"
 
         fun bind(product: ProductModel, clickListener: (ProductModel) -> Unit, context: Context){
             itemView.textView_title.text = product.title

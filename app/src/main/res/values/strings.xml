@@ -9,4 +9,8 @@
     <string name="condition_new">Nuevo</string>
     <string name="condition_used">Usado</string>
     <string name="condition_no_tag">No especificado</string>
+    <string name="search_product">Buscar Artículo</string>
+    <string name="search_button">Search</string>
+    <string name="quantity">Cantidad disponibles: %1$s</string>
+    <string name="description">Descripción</string>
 </resources>

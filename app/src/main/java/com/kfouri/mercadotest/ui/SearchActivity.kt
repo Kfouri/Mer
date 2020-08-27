@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kfouri.mercadotest.R
 import com.kfouri.mercadotest.adapter.SearchAdapter
 import com.kfouri.mercadotest.model.ProductModel
+import com.kfouri.mercadotest.util.Constants
 import com.kfouri.mercadotest.util.Utils
 import com.kfouri.mercadotest.viewmodel.SearchActivityViewModel
 import kotlinx.android.synthetic.main.activity_search.*
@@ -22,12 +23,16 @@ const val PRODUCT_ID = "productId"
 
 class SearchActivity : AppCompatActivity() {
 
+    private val TAG = "SearchActivity"
     private val adapter = SearchAdapter(this) { product : ProductModel -> itemClicked(product) }
-    private val list = ArrayList<ProductModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        if (Constants.ENABLE_LOG) {
+            Log.d(TAG, "onCreate()")
+        }
 
         recyclerView_search.setHasFixedSize(true)
         recyclerView_search.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
@@ -38,11 +43,16 @@ class SearchActivity : AppCompatActivity() {
         viewModel.onShowProgress().observe(this, Observer { showProgress(it) })
 
         button_search.setOnClickListener {
+
+            if (Constants.ENABLE_LOG) {
+                Log.d(TAG, "SearchButton pressed - Search Field empty?:"+editText_search.text.isEmpty())
+            }
+
             if (editText_search.text.isNotEmpty()) {
                 hideKeyboard()
                 viewModel.searchProduct(editText_search.text.toString())
             } else {
-                Toast.makeText(this, resources.getString(R.string.search_field_empty), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.search_field_empty), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -66,11 +76,18 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showProducts(list: ArrayList<ProductModel>) {
+        if (Constants.ENABLE_LOG) {
+            Log.d(TAG, "showProducts() - list size: "+list.size)
+        }
         adapter.setData(list)
     }
 
     private fun itemClicked(product: ProductModel) {
-        Log.d("Kafu", "Product ID: "+product.id)
+
+        if (Constants.ENABLE_LOG) {
+            Log.d(TAG, "itemClicked - productId: "+product.id)
+        }
+
         val intent = Intent(this, ProductDetailActivity::class.java)
         intent.putExtra(PRODUCT_ID, product.id)
         startActivity(intent)

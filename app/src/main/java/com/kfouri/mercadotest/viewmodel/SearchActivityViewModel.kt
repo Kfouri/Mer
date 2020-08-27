@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.kfouri.mercadotest.model.ProductModel
 import com.kfouri.mercadotest.model.SearchResponseModel
 import com.kfouri.mercadotest.network.ApiService
+import com.kfouri.mercadotest.util.Constants
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -13,10 +14,11 @@ import rx.schedulers.Schedulers
 
 class SearchActivityViewModel : ViewModel() {
 
+    private var TAG = "SearchActivityViewModel"
     private var list = ArrayList<ProductModel>()
 
-    var productList = MutableLiveData<ArrayList<ProductModel>>()
-    var showProgress = MutableLiveData<Boolean>()
+    private var productList = MutableLiveData<ArrayList<ProductModel>>()
+    private var showProgress = MutableLiveData<Boolean>()
 
     private val apiService by lazy {
         ApiService.create()
@@ -31,13 +33,18 @@ class SearchActivityViewModel : ViewModel() {
             .doOnTerminate { showProgress(false) }
             .subscribe(object : Subscriber<SearchResponseModel>() {
                 override fun onCompleted() {
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "searchProduct() - onCompleted() - find=$find")
+                    }
                     productList.value = list
                 }
 
                 override fun onError(e: Throwable) {
                     //showToast("Error al obtener los productos")
                     showProgress(false)
-                    Log.d("Kafu", "Error al obtener los productos (search)"+e.message)
+                    if (Constants.ENABLE_LOG) {
+                        Log.d(TAG, "searchProduct() - onError() - find=$find error="+e.message)
+                    }
                 }
 
                 override fun onNext(result: SearchResponseModel) {

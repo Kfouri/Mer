@@ -1,6 +1,7 @@
 package com.kfouri.mercadotest.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -12,11 +13,16 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.kfouri.mercadotest.R
 import com.kfouri.mercadotest.adapter.ViewPagerAdapter
 import com.kfouri.mercadotest.model.ProductResponseModel
+import com.kfouri.mercadotest.util.Constants.CONDITION_NEW
+import com.kfouri.mercadotest.util.Constants.CONDITION_USED
+import com.kfouri.mercadotest.util.Constants.ENABLE_LOG
 import com.kfouri.mercadotest.viewmodel.ProductDetailActivityViewModel
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.search_item.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
 
+    private var TAG = "ProductDetailActivity"
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private var dotsCount: Int = 0
     private var dots = ArrayList<ImageView>()
@@ -25,6 +31,10 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
+
+        if (ENABLE_LOG) {
+            Log.d(TAG, "onCreate()")
+        }
 
         setViewModel()
         getProducts()
@@ -39,7 +49,14 @@ class ProductDetailActivity : AppCompatActivity() {
 
     private fun getProducts() {
         intent?.let {
-            viewModel.getProduct(it.getStringExtra(PRODUCT_ID)!!)
+
+            val productId = it.getStringExtra(PRODUCT_ID)!!
+
+            if (ENABLE_LOG) {
+                Log.d(TAG, "getProduct() id: $productId")
+            }
+
+            viewModel.getProduct(productId)
         }
     }
 
@@ -76,10 +93,28 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun showProducts(product: ProductResponseModel) {
+
+        if (ENABLE_LOG) {
+            Log.d(TAG, "showProducts() product: $product")
+        }
+
         textView_title.text = product.title
         viewPagerAdapter.setData(product.pictures)
-        textView_price.text = product.price.toString()
-        textView_description.text = product.description?.plain_text
+        textView_price.text = getString(R.string.price, product.price.toString())
+
+        textView_condition.text = when (product.condition) {
+            CONDITION_NEW -> getString(R.string.condition_new)
+            CONDITION_USED -> getString(R.string.condition_used)
+            else -> getString(R.string.condition_no_tag)
+        }
+
+        textView_stock.text = getString(R.string.quantity, product.availableQuantity.toString())
+
+        product.description?.let {
+            textView_description_title.text = getString(R.string.description)
+            textView_description.text = it.plain_text
+        }
+
         setDots()
     }
 
