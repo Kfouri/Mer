@@ -13,4 +13,5 @@
     <string name="search_button">Search</string>
     <string name="quantity">Cantidad disponibles: %1$s</string>
     <string name="description">Descripción</string>
+    <string name="no_internet_connection">Sin conexión a internet</string>
 </resources>

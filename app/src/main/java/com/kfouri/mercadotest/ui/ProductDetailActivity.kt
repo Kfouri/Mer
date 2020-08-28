@@ -14,6 +14,7 @@ import com.kfouri.mercadotest.model.ProductResponseModel
 import com.kfouri.mercadotest.util.Constants.CONDITION_NEW
 import com.kfouri.mercadotest.util.Constants.CONDITION_USED
 import com.kfouri.mercadotest.util.Constants.ENABLE_LOG
+import com.kfouri.mercadotest.util.Utils
 import com.kfouri.mercadotest.viewmodel.ProductDetailActivityViewModel
 import kotlinx.android.synthetic.main.activity_product_detail.*
 
@@ -36,7 +37,12 @@ class ProductDetailActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
         subscribe()
 
-        getProducts()
+        if (!Utils.isNetworkAvailable(this)) {
+            showToast(getString(R.string.no_internet_connection))
+        } else {
+            getProducts()
+        }
+
         setViewPager()
     }
 

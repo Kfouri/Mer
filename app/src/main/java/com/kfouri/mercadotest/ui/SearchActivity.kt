@@ -43,12 +43,17 @@ class SearchActivity : BaseActivity() {
                 Log.d(TAG, "SearchButton pressed - Search Field empty?:"+editText_search.text.isEmpty())
             }
 
-            if (editText_search.text.isNotEmpty()) {
-                hideKeyboard()
-                viewModel.searchProduct(editText_search.text.toString())
+            if (!Utils.isNetworkAvailable(this)) {
+                showToast(getString(R.string.no_internet_connection))
             } else {
-                showToast(getString(R.string.search_field_empty))
+                if (editText_search.text.isNotEmpty()) {
+                    hideKeyboard()
+                    viewModel.searchProduct(editText_search.text.toString())
+                } else {
+                    showToast(getString(R.string.search_field_empty))
+                }
             }
+
         }
 
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
