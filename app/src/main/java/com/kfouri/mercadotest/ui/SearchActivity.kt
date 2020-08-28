@@ -1,9 +1,11 @@
 package com.kfouri.mercadotest.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,6 +18,8 @@ import com.kfouri.mercadotest.util.Constants
 import com.kfouri.mercadotest.util.Utils
 import com.kfouri.mercadotest.viewmodel.SearchActivityViewModel
 import kotlinx.android.synthetic.main.activity_search.*
+import java.lang.reflect.Field
+
 
 const val PRODUCT_ID = "productId"
 
@@ -98,5 +102,30 @@ class SearchActivity : BaseActivity() {
         val intent = Intent(this, ProductDetailActivity::class.java)
         intent.putExtra(PRODUCT_ID, product.id)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val im: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val fields =
+            arrayOf("mCurRootView", "mServedView", "mNextServedView")
+        try {
+            for (filedStr in fields) {
+                val field: Field = InputMethodManager::class.java.getDeclaredField(filedStr)
+                field.isAccessible = true
+                val mCurRootView: Any = field.get(im)!!
+                if (mCurRootView is View) {
+                    val context: Context = mCurRootView.context
+                    if (context === this) {
+                        field.set(im, null)
+                    }
+                }
+            }
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
+        }
     }
 }
