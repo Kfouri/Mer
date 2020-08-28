@@ -25,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val TAG = "SearchActivity"
     private val adapter = SearchAdapter(this) { product : ProductModel -> itemClicked(product) }
+    private lateinit var viewModel: SearchActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +35,12 @@ class SearchActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate()")
         }
 
-        recyclerView_search.setHasFixedSize(true)
-        recyclerView_search.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        recyclerView_search.adapter = adapter
+        setRecyclerView()
 
-        val viewModel = ViewModelProviders.of(this).get(SearchActivityViewModel::class.java)
-        viewModel.onProductList().observe(this, Observer { showProducts(it) })
-        viewModel.onShowProgress().observe(this, Observer { showProgress(it) })
+        viewModel = ViewModelProviders.of(this).get(SearchActivityViewModel::class.java)
+        subscribe()
 
         button_search.setOnClickListener {
-
             if (Constants.ENABLE_LOG) {
                 Log.d(TAG, "SearchButton pressed - Search Field empty?:"+editText_search.text.isEmpty())
             }
@@ -64,6 +61,18 @@ class SearchActivity : AppCompatActivity() {
                 textView_emptyList.visibility = if (cnt > 0) View.GONE else View.VISIBLE
             }
         })
+    }
+
+    private fun setRecyclerView() {
+        recyclerView_search.setHasFixedSize(true)
+        recyclerView_search.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        recyclerView_search.adapter = adapter
+    }
+
+    private fun subscribe() {
+        viewModel.onProductList().observe(this, Observer { showProducts(it) })
+        viewModel.onShowProgress().observe(this, Observer { showProgress(it) })
+        viewModel.onShowToast().observe(this, Observer { showToast(it) })
     }
 
     private fun showProgress(value: Boolean) {
@@ -91,5 +100,9 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this, ProductDetailActivity::class.java)
         intent.putExtra(PRODUCT_ID, product.id)
         startActivity(intent)
+    }
+
+    private fun showToast(error: String) {
+        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
     }
 }

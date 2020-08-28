@@ -16,6 +16,7 @@ class ProductDetailActivityViewModel : ViewModel() {
     private var TAG = "ProductDetailActivityViewModel"
     private var productLiveData = MutableLiveData<ProductResponseModel>()
     private var showProgress = MutableLiveData<Boolean>()
+    private var showToast = MutableLiveData<String>()
 
     private lateinit var product: ProductResponseModel
 
@@ -38,7 +39,7 @@ class ProductDetailActivityViewModel : ViewModel() {
                 }
 
                 override fun onError(e: Throwable) {
-                    //showToast("Error al obtener los productos")
+                    showToast(e.message.toString())
                     showProgress(false)
                     if (Constants.ENABLE_LOG) {
                         Log.d(TAG, "getProduct() - onError() - productID=$idProduct error="+e.message)
@@ -89,6 +90,11 @@ class ProductDetailActivityViewModel : ViewModel() {
         showProgress.value = value
     }
 
+    private fun showToast(error: String) {
+        showToast.value = error
+    }
+
     fun onGetProduct() = productLiveData
     fun onShowProgress() = showProgress
+    fun onShowToast() = showToast
 }

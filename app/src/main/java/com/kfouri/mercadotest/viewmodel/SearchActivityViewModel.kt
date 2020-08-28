@@ -19,6 +19,7 @@ class SearchActivityViewModel : ViewModel() {
 
     private var productList = MutableLiveData<ArrayList<ProductModel>>()
     private var showProgress = MutableLiveData<Boolean>()
+    private var showToast = MutableLiveData<String>()
 
     private val apiService by lazy {
         ApiService.create()
@@ -40,7 +41,7 @@ class SearchActivityViewModel : ViewModel() {
                 }
 
                 override fun onError(e: Throwable) {
-                    //showToast("Error al obtener los productos")
+                    showToast(e.message.toString())
                     showProgress(false)
                     if (Constants.ENABLE_LOG) {
                         Log.d(TAG, "searchProduct() - onError() - find=$find error="+e.message)
@@ -54,10 +55,15 @@ class SearchActivityViewModel : ViewModel() {
             })
     }
 
+    private fun showToast(error: String) {
+        showToast.value = error
+    }
+
     private fun showProgress(value: Boolean) {
         showProgress.value = value
     }
 
     fun onProductList() = productList
     fun onShowProgress() = showProgress
+    fun onShowToast() = showToast
 }

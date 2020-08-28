@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -18,7 +19,6 @@ import com.kfouri.mercadotest.util.Constants.CONDITION_USED
 import com.kfouri.mercadotest.util.Constants.ENABLE_LOG
 import com.kfouri.mercadotest.viewmodel.ProductDetailActivityViewModel
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.search_item.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
 
@@ -36,15 +36,17 @@ class ProductDetailActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate()")
         }
 
-        setViewModel()
+        viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
+        subscribe()
+
         getProducts()
         setViewPager()
     }
 
-    private fun setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
+    private fun subscribe() {
         viewModel.onGetProduct().observe(this, Observer { showProducts(it) })
         viewModel.onShowProgress().observe(this, Observer { showProgress(it) })
+        viewModel.onShowToast().observe(this, Observer { showToast(it) })
     }
 
     private fun getProducts() {
@@ -142,5 +144,9 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun showProgress(value: Boolean) {
         linearLayout_progress.visibility = if (value) View.VISIBLE else View.GONE
         progressBar.visibility = if (value) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(error: String) {
+        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
     }
 }
