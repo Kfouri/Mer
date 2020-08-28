@@ -2,7 +2,6 @@ package com.kfouri.mercadotest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.kfouri.mercadotest.model.ProductDetailResponseModel
 import com.kfouri.mercadotest.model.ProductResponseModel
 import com.kfouri.mercadotest.network.ApiService
@@ -11,12 +10,10 @@ import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class ProductDetailActivityViewModel : ViewModel() {
+class ProductDetailActivityViewModel : BaseViewModel() {
 
     private var TAG = "ProductDetailActivityViewModel"
     private var productLiveData = MutableLiveData<ProductResponseModel>()
-    private var showProgress = MutableLiveData<Boolean>()
-    private var showToast = MutableLiveData<String>()
 
     private lateinit var product: ProductResponseModel
 
@@ -86,15 +83,5 @@ class ProductDetailActivityViewModel : ViewModel() {
 
     }
 
-    private fun showProgress(value: Boolean) {
-        showProgress.value = value
-    }
-
-    private fun showToast(error: String) {
-        showToast.value = error
-    }
-
     fun onGetProduct() = productLiveData
-    fun onShowProgress() = showProgress
-    fun onShowToast() = showToast
 }

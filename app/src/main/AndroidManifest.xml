@@ -17,6 +17,10 @@
         tools:targetApi="m">
 
         <activity
+            android:name=".ui.BaseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.ProductDetailActivity"
             android:label="@string/product_detail_activity_label"/>
 

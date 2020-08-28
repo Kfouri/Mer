@@ -2,11 +2,8 @@ package com.kfouri.mercadotest.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +17,7 @@ import com.kfouri.mercadotest.util.Constants.ENABLE_LOG
 import com.kfouri.mercadotest.viewmodel.ProductDetailActivityViewModel
 import kotlinx.android.synthetic.main.activity_product_detail.*
 
-class ProductDetailActivity : AppCompatActivity() {
+class ProductDetailActivity : BaseActivity() {
 
     private var TAG = "ProductDetailActivity"
     private lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -139,14 +136,5 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         dots[0].setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.active_dot))
-    }
-
-    private fun showProgress(value: Boolean) {
-        linearLayout_progress.visibility = if (value) View.VISIBLE else View.GONE
-        progressBar.visibility = if (value) View.VISIBLE else View.GONE
-    }
-
-    private fun showToast(error: String) {
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
     }
 }

@@ -2,7 +2,6 @@ package com.kfouri.mercadotest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.kfouri.mercadotest.model.ProductModel
 import com.kfouri.mercadotest.model.SearchResponseModel
 import com.kfouri.mercadotest.network.ApiService
@@ -12,14 +11,12 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 
-class SearchActivityViewModel : ViewModel() {
+class SearchActivityViewModel : BaseViewModel() {
 
     private var TAG = "SearchActivityViewModel"
     private var list = ArrayList<ProductModel>()
 
     private var productList = MutableLiveData<ArrayList<ProductModel>>()
-    private var showProgress = MutableLiveData<Boolean>()
-    private var showToast = MutableLiveData<String>()
 
     private val apiService by lazy {
         ApiService.create()
@@ -55,15 +52,5 @@ class SearchActivityViewModel : ViewModel() {
             })
     }
 
-    private fun showToast(error: String) {
-        showToast.value = error
-    }
-
-    private fun showProgress(value: Boolean) {
-        showProgress.value = value
-    }
-
     fun onProductList() = productList
-    fun onShowProgress() = showProgress
-    fun onShowToast() = showToast
 }

@@ -1,11 +1,9 @@
 package com.kfouri.mercadotest.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 const val PRODUCT_ID = "productId"
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
 
     private val TAG = "SearchActivity"
     private val adapter = SearchAdapter(this) { product : ProductModel -> itemClicked(product) }
@@ -49,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
                 hideKeyboard()
                 viewModel.searchProduct(editText_search.text.toString())
             } else {
-                Toast.makeText(this, getString(R.string.search_field_empty), Toast.LENGTH_LONG).show()
+                showToast(getString(R.string.search_field_empty))
             }
         }
 
@@ -75,11 +73,6 @@ class SearchActivity : AppCompatActivity() {
         viewModel.onShowToast().observe(this, Observer { showToast(it) })
     }
 
-    private fun showProgress(value: Boolean) {
-        linearLayout_progress.visibility = if (value) View.VISIBLE else View.GONE
-        progressBar.visibility = if (value) View.VISIBLE else View.GONE
-    }
-
     private fun hideKeyboard() {
         Utils.hideKeyboard(this)
     }
@@ -100,9 +93,5 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this, ProductDetailActivity::class.java)
         intent.putExtra(PRODUCT_ID, product.id)
         startActivity(intent)
-    }
-
-    private fun showToast(error: String) {
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
     }
 }
