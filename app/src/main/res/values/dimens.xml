@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_search_edit_text_search_marginStart">8dp</dimen>
+    <dimen name="activity_search_edit_text_search_marginTop">16dp</dimen>
+    <dimen name="activity_search_edit_text_search_marginEnd">8dp</dimen>
+    <dimen name="activity_search_edit_text_search_marginBottom">16dp</dimen>
+    <dimen name="activity_search_edit_text_search_padding">6dp</dimen>
+    <dimen name="activity_search_button_search_marginEnd">8dp</dimen>
+
+    <dimen name="progressBar_width">50dp</dimen>
+    <dimen name="progressBar_height">50dp</dimen>
+
+    <dimen name="search_item_imageView_image_width">100dp</dimen>
+    <dimen name="search_item_imageView_image_height">160dp</dimen>
+    <dimen name="search_item_imageView_image_marginStart">24dp</dimen>
+    <dimen name="search_item_imageView_image_marginTop">16dp</dimen>
+    <dimen name="search_item_imageView_image_marginBottom">16dp</dimen>
+    <dimen name="search_item_main_layout_marginStart">24dp</dimen>
+    <dimen name="search_item_main_layout_marginTop">16dp</dimen>
+    <dimen name="search_item_main_layout_marginEnd">16dp</dimen>
+    <dimen name="search_item_textView_title_marginTop">8dp</dimen>
+    <dimen name="search_item_textView_price_marginTop">8dp</dimen>
+    <dimen name="search_item_textView_price_text_size">18sp</dimen>
+    <dimen name="search_item_textView_condition_marginTop">8dp</dimen>
+    <dimen name="search_item_textView_condition_text_size">12sp</dimen>
+    <dimen name="search_item_textView_free_marginTop">8dp</dimen>
+    <dimen name="search_item_textView_free_text_size">12sp</dimen>
+
+    <dimen name="view_pager_layout_width">200dp</dimen>
+    <dimen name="view_pager_layout_height">320dp</dimen>
+
+    <dimen name="activity_product_detail_textView_condition_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_condition_marginTop">8dp</dimen>
+    <dimen name="activity_product_detail_textView_condition_text_size">14sp</dimen>
+    <dimen name="activity_product_detail_textView_title_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_title_marginTop">8dp</dimen>
+    <dimen name="activity_product_detail_textView_title_text_size">15sp</dimen>
+    <dimen name="activity_product_detail_viewPager_images_height">320dp</dimen>
+    <dimen name="activity_product_detail_viewPager_images_marginTop">16dp</dimen>
+    <dimen name="activity_product_detail_sliderDots_marginTop">16dp</dimen>
+    <dimen name="activity_product_detail_textView_price_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_price_marginTop">16dp</dimen>
+    <dimen name="activity_product_detail_textView_price_text_size">24sp</dimen>
+    <dimen name="activity_product_detail_textView_stock_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_stock_marginTop">16dp</dimen>
+    <dimen name="activity_product_detail_textView_description_title_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_description_title_marginTop">10dp</dimen>
+    <dimen name="activity_product_detail_textView_description_marginStart">16dp</dimen>
+    <dimen name="activity_product_detail_textView_description_marginTop">18dp</dimen>
+    <dimen name="activity_product_detail_textView_description_marginEnd">16dp</dimen>
+</resources>
