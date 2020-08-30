@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +16,7 @@ import com.kfouri.mercadotest.adapter.SearchAdapter
 import com.kfouri.mercadotest.model.ProductModel
 import com.kfouri.mercadotest.util.Constants
 import com.kfouri.mercadotest.util.Utils
+import com.kfouri.mercadotest.util.Utils.fixInputMethod
 import com.kfouri.mercadotest.viewmodel.SearchActivityViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 import java.lang.reflect.Field
@@ -39,7 +40,7 @@ class SearchActivity : BaseActivity() {
 
         setRecyclerView()
 
-        viewModel = ViewModelProviders.of(this).get(SearchActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchActivityViewModel::class.java)
         subscribe()
 
         button_search.setOnClickListener {
@@ -106,26 +107,6 @@ class SearchActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val im: InputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val fields =
-            arrayOf("mCurRootView", "mServedView", "mNextServedView")
-        try {
-            for (filedStr in fields) {
-                val field: Field = InputMethodManager::class.java.getDeclaredField(filedStr)
-                field.isAccessible = true
-                val mCurRootView: Any = field.get(im)!!
-                if (mCurRootView is View) {
-                    val context: Context = mCurRootView.context
-                    if (context === this) {
-                        field.set(im, null)
-                    }
-                }
-            }
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        } catch (e: NoSuchFieldException) {
-            e.printStackTrace()
-        }
+        fixInputMethod(this)
     }
 }

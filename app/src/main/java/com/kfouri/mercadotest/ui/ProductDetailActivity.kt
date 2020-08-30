@@ -5,11 +5,13 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.kfouri.mercadotest.R
 import com.kfouri.mercadotest.adapter.ViewPagerAdapter
+import com.kfouri.mercadotest.databinding.ActivityProductDetailBinding
 import com.kfouri.mercadotest.model.ProductResponseModel
 import com.kfouri.mercadotest.util.Constants.CONDITION_NEW
 import com.kfouri.mercadotest.util.Constants.CONDITION_USED
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_product_detail.*
 class ProductDetailActivity : BaseActivity() {
 
     private var TAG = "ProductDetailActivity"
+    private lateinit var binding: ActivityProductDetailBinding
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private var dotsCount: Int = 0
     private var dots = ArrayList<ImageView>()
@@ -28,14 +31,14 @@ class ProductDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_detail)
 
         if (ENABLE_LOG) {
             Log.d(TAG, "onCreate()")
         }
 
-        viewModel = ViewModelProviders.of(this).get(ProductDetailActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProductDetailActivityViewModel::class.java)
         subscribe()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
 
         if (!Utils.isNetworkAvailable(this)) {
             showToast(getString(R.string.no_internet_connection))
@@ -103,22 +106,9 @@ class ProductDetailActivity : BaseActivity() {
             Log.d(TAG, "showProducts() product: $product")
         }
 
-        textView_title.text = product.title
+        binding.product = product
+
         viewPagerAdapter.setData(product.pictures)
-        textView_price.text = getString(R.string.price, product.price.toString())
-
-        textView_condition.text = when (product.condition) {
-            CONDITION_NEW -> getString(R.string.condition_new)
-            CONDITION_USED -> getString(R.string.condition_used)
-            else -> getString(R.string.condition_no_tag)
-        }
-
-        textView_stock.text = getString(R.string.quantity, product.availableQuantity.toString())
-
-        product.description?.let {
-            textView_description_title.text = getString(R.string.description)
-            textView_description.text = it.plain_text
-        }
 
         setDots()
     }

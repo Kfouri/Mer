@@ -1,121 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ProductDetailActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    tools:context=".ui.ProductDetailActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <data>
+        <import type="com.kfouri.mercadotest.model.ProductResponseModel" />
+        <variable
+            name="product"
+            type="ProductResponseModel"/>
+    </data>
 
-            <TextView
-                android:id="@+id/textView_condition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_condition_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_condition_marginTop"
-                android:textSize="@dimen/activity_product_detail_textView_condition_text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Usado" />
-
-            <TextView
-                android:id="@+id/textView_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_title_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_title_marginTop"
-                android:textSize="@dimen/activity_product_detail_textView_title_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_condition"
-                tools:text="Moto G6 64 Gb Indigo Oscuro 4gb Ram" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager_images"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/activity_product_detail_viewPager_images_height"
-                android:layout_marginTop="@dimen/activity_product_detail_viewPager_images_marginTop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_title" />
-
-            <LinearLayout
-                android:id="@+id/sliderDots"
-                android:orientation="horizontal"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_product_detail_sliderDots_marginTop"
-                app:layout_constraintTop_toBottomOf="@+id/viewPager_images"/>
-
-            <TextView
-                android:id="@+id/textView_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_price_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_price_marginTop"
-                android:textSize="@dimen/activity_product_detail_textView_price_text_size"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sliderDots"
-                tools:text="12345.00" />
-
-            <TextView
-                android:id="@+id/textView_stock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_stock_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_stock_marginTop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_price"
-                tools:text="Stock disponible: 1" />
-
-            <TextView
-                android:id="@+id/textView_description_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_description_title_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_description_title_marginTop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_stock"
-                tools:text="Descripción"/>
-
-            <TextView
-                android:id="@+id/textView_description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_product_detail_textView_description_marginStart"
-                android:layout_marginTop="@dimen/activity_product_detail_textView_description_marginTop"
-                android:layout_marginEnd="@dimen/activity_product_detail_textView_description_marginEnd"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_description_title"
-                tools:text="Mayor rendimiento en las pruebas realizadas" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout_progress"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_progress"
-        android:gravity="center"
-        android:visibility="gone">
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:indeterminateDrawable="@drawable/my_progress_style"
-            android:layout_width="@dimen/progressBar_width"
-            android:layout_height="@dimen/progressBar_height"
-            android:indeterminate="false"
-            android:visibility="gone" />
-    </LinearLayout>
-</FrameLayout>
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView_condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_condition_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_condition_marginTop"
+                    android:textSize="@dimen/activity_product_detail_textView_condition_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:condition="@{ product.condition }"
+                    tools:text="Usado" />
+
+                <TextView
+                    android:id="@+id/textView_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_title_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_title_marginTop"
+                    android:textSize="@dimen/activity_product_detail_textView_title_text_size"
+                    android:textStyle="bold"
+                    android:text="@{product.title }"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_condition"
+                    tools:text="Moto G6 64 Gb Indigo Oscuro 4gb Ram" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/activity_product_detail_viewPager_images_height"
+                    android:layout_marginTop="@dimen/activity_product_detail_viewPager_images_marginTop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+
+                <LinearLayout
+                    android:id="@+id/sliderDots"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_product_detail_sliderDots_marginTop"
+                    app:layout_constraintTop_toBottomOf="@+id/viewPager_images"/>
+
+                <TextView
+                    android:id="@+id/textView_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_price_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_price_marginTop"
+                    android:textSize="@dimen/activity_product_detail_textView_price_text_size"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:price="@{ product.price }"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sliderDots"
+                    tools:text="12345.00" />
+
+                <TextView
+                    android:id="@+id/textView_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_stock_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_stock_marginTop"
+                    app:stock="@{product.availableQuantity}"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_price"
+                    tools:text="Stock disponible: 1" />
+
+                <TextView
+                    android:id="@+id/textView_description_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_description_title_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_description_title_marginTop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_stock"
+                    android:visibility="gone"
+                    tools:text="Descripción"/>
+
+                <TextView
+                    android:id="@+id/textView_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_product_detail_textView_description_marginStart"
+                    android:layout_marginTop="@dimen/activity_product_detail_textView_description_marginTop"
+                    android:layout_marginEnd="@dimen/activity_product_detail_textView_description_marginEnd"
+                    android:visibility="gone"
+                    app:description="@{product.description.plain_text}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_description_title"
+                    tools:text="Mayor rendimiento en las pruebas realizadas" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_progress"
+            android:gravity="center"
+            android:visibility="gone">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:indeterminateDrawable="@drawable/my_progress_style"
+                android:layout_width="@dimen/progressBar_width"
+                android:layout_height="@dimen/progressBar_height"
+                android:indeterminate="false"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>
