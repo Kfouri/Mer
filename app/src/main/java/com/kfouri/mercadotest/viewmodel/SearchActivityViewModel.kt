@@ -22,6 +22,11 @@ class SearchActivityViewModel : BaseViewModel() {
         ApiService.create()
     }
 
+    /**
+     * Return a list of product based on parameter find
+     * @param find
+     * @return a list of product on productList live data
+     */
     fun searchProduct(find: String) {
 
         apiService.searchProduct("MLA", find)

@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/imageView_viewPager"
-        android:layout_width="@dimen/view_pager_layout_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/view_pager_layout_height"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@null"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitCenter"/>
 
 </LinearLayout>

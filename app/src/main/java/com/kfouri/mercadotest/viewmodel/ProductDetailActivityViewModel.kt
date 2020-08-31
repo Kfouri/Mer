@@ -21,6 +21,11 @@ class ProductDetailActivityViewModel : BaseViewModel() {
         ApiService.create()
     }
 
+    /**
+     * Return one product based on parameter ID
+     * @param idProduct
+     * @return a product on productLiveData
+     */
     fun getProduct(idProduct: String) {
 
         apiService.getProduct(idProduct)

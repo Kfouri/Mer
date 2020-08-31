@@ -12,6 +12,10 @@ import java.lang.reflect.Field
 
 object Utils {
 
+    /**
+     * Hide the softKeyboard
+     * @param activity
+     */
     @JvmStatic
     fun hideKeyboard(activity: Activity) {
         val view = activity.currentFocus
@@ -21,6 +25,11 @@ object Utils {
         }
     }
 
+    /**
+     * Check is Network is available
+     * @param context
+     * @return true if is available, otherwise false
+     */
     fun isNetworkAvailable(context: Context?): Boolean {
         if (context == null) return false
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
